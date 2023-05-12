@@ -5,10 +5,13 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import styles from './styles';
-import Fundo from '../../../../assets/fundo.png';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Fundo from '../../../../assets/fundo.png';
+import Poke from '../../../../assets/Poke.png';
 
 type FormProps = {
   values: {
@@ -17,8 +20,15 @@ type FormProps = {
     confirmPassword?: string;
     username?: string;
   };
+  valuesText: {
+    email: string;
+    password: string;
+    confirmPassword?: string;
+    username?: string;
+  };
   onPress: () => void;
   onChange: (name: string, value: string) => void;
+  onBack: () => void;
   inputExist?: boolean;
   title: string;
   text: string;
@@ -28,64 +38,81 @@ export default function FormPadrao({
   onPress,
   inputExist = false,
   title,
+  valuesText,
   values,
   onChange,
+  onBack,
 }: FormProps) {
   return (
     <ImageBackground source={Fundo} blurRadius={4} style={styles.container}>
-      <View style={styles.infos}>
-        <View style={styles.inputs}>
-          <Text>Email</Text>
-          <TextInput
-            placeholder="insira seu email"
-            value={values.email}
-            onChangeText={value => onChange('email', value)}
-            style={styles.input}
-          />
+      <View style={styles.effect}>
+        <View style={styles.containerImage}>
+          <Image source={Poke} style={styles.poke} />
         </View>
-        {inputExist && (
+        <Text style={styles.trainer}>Trainer Club</Text>
+        <View style={styles.infos}>
           <View style={styles.inputs}>
-            <Text>Username</Text>
             <TextInput
-              placeholder="insira um username"
-              value={values.username}
-              onChangeText={value => onChange('username', value)}
+              autoComplete="off"
+              placeholder={valuesText.email}
+              value={values.email}
+              placeholderTextColor={'white'}
+              onChangeText={value => onChange('email', value)}
               style={styles.input}
             />
           </View>
-        )}
-        <View style={styles.inputs}>
-          <Text>Password</Text>
-          <TextInput
-            placeholder="insira sua senha"
-            value={values.password}
-            onChangeText={value => onChange('password', value)}
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
-        {inputExist && (
+          {inputExist && (
+            <View style={styles.inputs}>
+              <TextInput
+                placeholder={valuesText.username}
+                value={values.username}
+                placeholderTextColor={'white'}
+                onChangeText={value => onChange('username', value)}
+                style={styles.input}
+              />
+            </View>
+          )}
           <View style={styles.inputs}>
-            <Text>Confirm Password</Text>
             <TextInput
-              placeholder="confirme sua senha"
-              value={values.confirmPassword}
-              onChangeText={value => onChange('confirmPassword', value)}
+              placeholder={valuesText.password}
+              value={values.password}
+              placeholderTextColor={'white'}
+              onChangeText={value => onChange('password', value)}
               style={styles.input}
               secureTextEntry
             />
           </View>
-        )}
-      </View>
-      <View style={styles.request}>
-        <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
-          <LinearGradient
-            colors={['rgb(119, 252, 104)', '#6afdc2']}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            style={styles.button}>
-            <Text style={styles.requestText}>{title}</Text>
-          </LinearGradient>
+          {inputExist && (
+            <View style={styles.inputs}>
+              <TextInput
+                placeholder={valuesText.confirmPassword}
+                value={values.confirmPassword}
+                placeholderTextColor={'white'}
+                onChangeText={value => onChange('confirmPassword', value)}
+                style={styles.input}
+                secureTextEntry
+              />
+            </View>
+          )}
+        </View>
+        <View style={styles.request}>
+          <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
+            <LinearGradient
+              colors={['rgb(119, 252, 104)', '#6afdc2']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={styles.button}>
+              <Text style={styles.requestText}>{title}</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={onBack}
+          activeOpacity={0.9}>
+          <View style={styles.iconBorder}>
+            <Icon name="close" color={'#6aedaf'} size={24} />
+          </View>
         </TouchableOpacity>
       </View>
     </ImageBackground>

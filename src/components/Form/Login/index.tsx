@@ -4,9 +4,10 @@ import FormPadrao from '../FormPadrao';
 
 type LoginProps = {
   onPress: () => void;
+  onBack: () => void;
 };
 
-export default function LoginForm({onPress}: LoginProps) {
+export default function LoginForm({onPress, onBack}: LoginProps) {
   const [valuesList, setValuesList] = useState<{
     email: string;
     password: string;
@@ -25,6 +26,8 @@ export default function LoginForm({onPress}: LoginProps) {
 
   return (
     <FormPadrao
+      valuesText={{email: 'Digite seu email', password: 'Digite sua senha'}}
+      onBack={onBack}
       onPress={onPress}
       onChange={handleChange}
       values={valuesList}

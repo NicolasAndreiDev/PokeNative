@@ -6,6 +6,7 @@ import LoginForm from '../../components/Form/Login';
 
 type RootStackParamList = {
   Login: undefined;
+  UserType: undefined;
   Main: undefined;
 };
 
@@ -21,10 +22,14 @@ export default function Login({navigation}: LoginProps) {
     });
   }
 
+  function handleClickBack() {
+    navigation.navigate('UserType');
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <LoginForm onPress={handleClick} />
+        <LoginForm onBack={handleClickBack} onPress={handleClick} />
       </View>
     </TouchableWithoutFeedback>
   );

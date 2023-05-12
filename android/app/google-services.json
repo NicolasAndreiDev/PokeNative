@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "638595927668",
+    "project_id": "react-native-103ac",
+    "storage_bucket": "react-native-103ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638595927668:android:dfcff68a8e49c8bae80b21",
+        "android_client_info": {
+          "package_name": "com.pokedexnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638595927668-n5dngv6699c442uv0grvgvj2spgqqgak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pokedexnative",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "638595927668-ccnoq52ubhttlkcjk5ba0p58c9679c49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL0haGjlpd-cEXcQ5Mv4_pf9eal8zpRk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638595927668-ccnoq52ubhttlkcjk5ba0p58c9679c49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

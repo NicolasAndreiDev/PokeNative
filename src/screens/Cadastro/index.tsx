@@ -1,9 +1,12 @@
 import React from 'react';
 import CadastroForm from '../../components/Form/Cadastro';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
+import styles from './styles';
 
 type RootStackParamList = {
   Cadastro: undefined;
+  UserType: undefined;
   Main: undefined;
 };
 
@@ -19,5 +22,15 @@ export default function Cadastro({navigation}: CadastroProps) {
     });
   }
 
-  return <CadastroForm onPress={handleClick} />;
+  function handleClickBack() {
+    navigation.navigate('UserType');
+  }
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <CadastroForm onBack={handleClickBack} onPress={handleClick} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
 }

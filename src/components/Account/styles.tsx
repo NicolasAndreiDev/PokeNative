@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet} from 'react-native';
 
-const width = Dimensions.get('screen').width;
-const height = Dimensions.get('screen').height;
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   effect: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   containerImage: {
     width: '100%',
-    height: height * 0.146,
+    height: height * 0.156,
     position: 'absolute',
     top: 32,
     display: 'flex',
@@ -22,9 +22,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   image: {
-    position: 'absolute',
     width: width * 0.8,
-    height: height * 0.146,
+    height: height * 0.156,
   },
   buttons: {
     marginBottom: '32%',
@@ -39,8 +38,7 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     padding: 12,
     borderWidth: 1,
-    color: 'rgb(119, 252, 104)',
-    borderColor: 'rgb(119, 252, 104)',
+    borderColor: '#6aedaf',
     borderRadius: 100,
   },
   text: {
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
   text2: {
-    color: 'rgb(119, 252, 104)',
+    color: '#6aedaf',
   },
 });
 
