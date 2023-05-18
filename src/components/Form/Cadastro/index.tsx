@@ -2,6 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import FormPadrao from '../FormPadrao';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {Alert} from 'react-native';
 
 type CadastroProps = {
@@ -26,13 +27,36 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
     setValuesList({...valuesList, [name]: value});
   }
 
-  async function handlleClickCadastro() {
+  async function handleClickCadastro() {
     try {
-      const cadastro = auth().createUserWithEmailAndPassword(
+      if (
+        valuesList.email === '' ||
+        valuesList.username === '' ||
+        valuesList.password === '' ||
+        valuesList.confirmPassword === ''
+      ) {
+        return Alert.alert('Preencha todos os campos!');
+      }
+
+      const userDoc = await firestore()
+        .collection('users')
+        .doc(valuesList.username)
+        .get();
+
+      if (userDoc.exists) {
+        return Alert.alert('Usuário já existe!');
+      }
+
+      const cadastro = await auth().createUserWithEmailAndPassword(
         valuesList.email,
         valuesList.password,
       );
-      if (await cadastro) {
+
+      if (cadastro) {
+        await firestore().collection('users').doc(valuesList.username).set({
+          email: valuesList.email,
+          username: valuesList.username,
+        });
         onPress();
       }
     } catch (err) {
@@ -49,7 +73,7 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
         confirmPassword: 'Confirme sua senha',
       }}
       onBack={onBack}
-      onPress={handlleClickCadastro}
+      onPress={handleClickCadastro}
       onChange={handleChange}
       values={valuesList}
       inputExist={true}

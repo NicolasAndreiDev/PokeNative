@@ -1,6 +1,11 @@
 import React from 'react';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Captura from '../../components/Captura';
 
 export default function Home() {
-  return <View />;
+  return (
+    <SafeAreaView>
+      <Captura />
+    </SafeAreaView>
+  );
 }

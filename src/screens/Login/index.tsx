@@ -7,7 +7,7 @@ import LoginForm from '../../components/Form/Login';
 type RootStackParamList = {
   Login: undefined;
   UserType: undefined;
-  Main: undefined;
+  Home: undefined;
 };
 
 type LoginProps = {
@@ -18,7 +18,7 @@ export default function Login({navigation}: LoginProps) {
   function handleClick() {
     navigation.reset({
       index: 0,
-      routes: [{name: 'Main'}],
+      routes: [{name: 'Home'}],
     });
   }
 

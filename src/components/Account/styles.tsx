@@ -4,8 +4,11 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
+  fundo: {
+    height: height,
+  },
   effect: {
-    height: '100%',
+    height: height,
     width: '100%',
     backgroundColor: 'rgba(0,0,0, 0.5)',
     display: 'flex',
@@ -30,12 +33,12 @@ const styles = StyleSheet.create({
     gap: 32,
   },
   button: {
-    width: width * 0.8,
+    width: width * 0.7,
     padding: 12,
     borderRadius: 100,
   },
   button2: {
-    width: width * 0.8,
+    width: width * 0.7,
     padding: 12,
     borderWidth: 1,
     borderColor: '#6aedaf',

@@ -19,7 +19,7 @@ export default function Account({
   onPressCadastro: () => void;
 }) {
   return (
-    <ImageBackground source={Fundo} blurRadius={4}>
+    <ImageBackground source={Fundo} blurRadius={4} style={styles.fundo}>
       <View style={styles.effect}>
         <View style={styles.containerImage}>
           <Image source={Poke} style={styles.image} />
