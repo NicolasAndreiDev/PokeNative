@@ -7,7 +7,7 @@ import styles from './styles';
 type RootStackParamList = {
   Cadastro: undefined;
   UserType: undefined;
-  Home: undefined;
+  SelectCharacter: undefined;
 };
 
 type CadastroProps = {
@@ -18,7 +18,7 @@ export default function Cadastro({navigation}: CadastroProps) {
   function handleClick() {
     navigation.reset({
       index: 0,
-      routes: [{name: 'Home'}],
+      routes: [{name: 'SelectCharacter'}],
     });
   }
 

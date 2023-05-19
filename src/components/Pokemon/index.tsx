@@ -5,18 +5,20 @@ import API from '../../utils/Api';
 
 const height = Dimensions.get('window').height;
 
-export default function InfoUser() {
-  const [pokemon, setPokemon] = useState({});
+export default function Pokemon({refreshPoke}: {refreshPoke: boolean}) {
+  const [pokemon, setPokemon] = useState<{height: number}>({
+    height: 0,
+  });
 
   useEffect(() => {
     const res = async () => {
-      setPokemon(await API());
+      const randomValue = Math.floor(Math.random() * 700);
+      setPokemon(await API({id: randomValue}));
     };
     res();
-  }, []);
+  }, [refreshPoke]);
 
-  // @ts-ignore
-  const pokemonHeight = pokemon?.height || 0;
+  const pokemonHeight = pokemon.height;
 
   return (
     <View style={styles.infoUser}>
@@ -26,10 +28,13 @@ export default function InfoUser() {
           // @ts-ignore
           source={{uri: `${pokemon.sprites.other.home.front_default}`}}
           style={[
-            styles.pokemon,
             {
-              height: (height * pokemonHeight) / 54,
-              width: (height * pokemonHeight) / 52,
+              height:
+                (pokemonHeight < 20 ? height * pokemonHeight : height * 16) /
+                40,
+              width:
+                (pokemonHeight < 20 ? height * pokemonHeight : height * 16) /
+                40,
             },
           ]}
         />

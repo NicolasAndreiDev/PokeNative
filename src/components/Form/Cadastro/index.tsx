@@ -14,12 +14,10 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
   const [valuesList, setValuesList] = useState<{
     email: string;
     password: string;
-    username: string;
     confirmPassword: string;
   }>({
     email: '',
     password: '',
-    username: '',
     confirmPassword: '',
   });
 
@@ -31,7 +29,6 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
     try {
       if (
         valuesList.email === '' ||
-        valuesList.username === '' ||
         valuesList.password === '' ||
         valuesList.confirmPassword === ''
       ) {
@@ -40,7 +37,7 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
 
       const userDoc = await firestore()
         .collection('users')
-        .doc(valuesList.username)
+        .doc(valuesList.email)
         .get();
 
       if (userDoc.exists) {
@@ -53,9 +50,8 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
       );
 
       if (cadastro) {
-        await firestore().collection('users').doc(valuesList.username).set({
+        await firestore().collection('users').doc(valuesList.email).set({
           email: valuesList.email,
-          username: valuesList.username,
         });
         onPress();
       }
@@ -69,7 +65,6 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
       valuesText={{
         email: 'Digite um email',
         password: 'Digite uma senha',
-        username: 'Digite um username',
         confirmPassword: 'Confirme sua senha',
       }}
       onBack={onBack}

@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     display: 'flex',
     gap: 20,
+    marginTop: 12,
+    marginBottom: 20,
   },
   requestText: {
     textTransform: 'uppercase',
@@ -64,8 +66,6 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 100,
-    marginTop: 24,
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 12,

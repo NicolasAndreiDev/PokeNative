@@ -18,13 +18,11 @@ type FormProps = {
     email: string;
     password: string;
     confirmPassword?: string;
-    username?: string;
   };
   valuesText: {
     email: string;
     password: string;
     confirmPassword?: string;
-    username?: string;
   };
   onPress: () => void;
   onChange: (name: string, value: string) => void;
@@ -61,17 +59,6 @@ export default function FormPadrao({
               style={styles.input}
             />
           </View>
-          {inputExist && (
-            <View style={styles.inputs}>
-              <TextInput
-                placeholder={valuesText.username}
-                value={values.username}
-                placeholderTextColor={'white'}
-                onChangeText={value => onChange('username', value)}
-                style={styles.input}
-              />
-            </View>
-          )}
           <View style={styles.inputs}>
             <TextInput
               placeholder={valuesText.password}

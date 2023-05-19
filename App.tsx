@@ -8,6 +8,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import React from 'react';
 import UserType from './src/screens/UserType';
 import Cadastro from './src/screens/Cadastro';
+import SelectCharacter from './src/screens/SelectCharacter';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function App() {
         <Stack.Screen name={'UserType'} component={UserType} />
         <Stack.Screen name={'Login'} component={Login} />
         <Stack.Screen name={'Cadastro'} component={Cadastro} />
+        <Stack.Screen name={'SelectCharacter'} component={SelectCharacter} />
         <Stack.Screen name={'Home'} component={Home} />
         <Stack.Screen name={'Profile'} component={Profile} />
       </Stack.Navigator>
