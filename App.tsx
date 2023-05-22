@@ -9,6 +9,7 @@ import React from 'react';
 import UserType from './src/screens/UserType';
 import Cadastro from './src/screens/Cadastro';
 import SelectCharacter from './src/screens/SelectCharacter';
+import PokemonPage from './src/screens/Pokemon';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ function App() {
         <Stack.Screen name={'SelectCharacter'} component={SelectCharacter} />
         <Stack.Screen name={'Home'} component={Home} />
         <Stack.Screen name={'Profile'} component={Profile} />
+        <Stack.Screen name={'Pokemon'} component={PokemonPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

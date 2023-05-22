@@ -18,7 +18,7 @@ export default function Pokemon({refreshPoke}: {refreshPoke: boolean}) {
     res();
   }, [refreshPoke]);
 
-  const pokemonHeight = pokemon.height;
+  const pokemonHeight = pokemon.height < 8 ? 8 : pokemon.height;
 
   return (
     <View style={styles.infoUser}>

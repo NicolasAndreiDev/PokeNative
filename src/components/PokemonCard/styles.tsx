@@ -1,10 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
+  card: {
+    height: 100,
+    width: 100,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  pokemonImage: {
+    height: 80,
+    width: 80,
   },
 });
 

@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/AntDesign';
 import Fundo from '../../../../assets/fundo.png';
 import Poke from '../../../../assets/Poke.png';
+import ButtonBack from '../../ButtonBack';
 
 type FormProps = {
   values: {
@@ -93,14 +93,7 @@ export default function FormPadrao({
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={onBack}
-          activeOpacity={0.9}>
-          <View style={styles.iconBorder}>
-            <Icon name="close" color={'#6aedaf'} size={24} />
-          </View>
-        </TouchableOpacity>
+        <ButtonBack onBack={onBack} />
       </View>
     </ImageBackground>
   );

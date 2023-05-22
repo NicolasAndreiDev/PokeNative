@@ -5,6 +5,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 type RootStackParamList = {
   Profile: undefined;
   Home: undefined;
+  Pokemon: undefined;
 };
 
 type ProfileProps = {
@@ -16,5 +17,9 @@ export default function Profile({navigation}: ProfileProps) {
     navigation.navigate('Home');
   }
 
-  return <User onBack={handleClickBack} />;
+  function handleClickPokemon() {
+    navigation.navigate('Pokemon');
+  }
+
+  return <User onBack={handleClickBack} onTouch={handleClickPokemon} />;
 }

@@ -70,25 +70,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
   },
-  icon: {
-    backgroundColor: '#1D8696',
-    height: 48,
-    bottom: 0,
-    marginBottom: height * 0.06,
-    position: 'absolute',
-    width: 48,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 100,
-    elevation: 4,
-  },
-  iconBorder: {
-    borderWidth: 2,
-    borderColor: '#6aedaf',
-    borderRadius: 100,
-    padding: 6,
-  },
 });
 
 export default styles;
