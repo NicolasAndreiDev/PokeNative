@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Image, View, ScrollView, Dimensions, Text} from 'react-native';
 import TrainerM from '../../../assets/Trainer_M.png';
+import TrainerF from '../../../assets/Trainer_F.png';
 import styles from './styles';
 import PokemonCard from '../PokemonCard';
 import ButtonBack from '../ButtonBack';
 import API from '../../utils/Api';
+import {useContext} from 'react';
+import {userContext} from '../../providers/userProvider';
 
 const height = Dimensions.get('window').height;
 
@@ -13,16 +16,22 @@ export default function User({
   onTouch,
 }: {
   onBack: () => void;
-  onTouch: () => void;
+  onTouch: (value: number) => void;
 }) {
-  const [pokemon, setPokemon] = useState<{height: number}>({height: 0});
+  const [pokemon, setPokemon] = useState<{height: number; name: string}>({
+    height: 0,
+    name: '',
+  });
+  const {user} = useContext(userContext);
 
   useEffect(() => {
-    const res = async () => {
-      setPokemon(await API({id: 500}));
-    };
-    res();
-  }, []);
+    if (user?.pokemonFav) {
+      const res = async () => {
+        setPokemon(await API({id: user?.pokemonFav}));
+      };
+      res();
+    }
+  }, [user]);
 
   //@ts-ignore
   const pokemonHeigth = pokemon?.height < 8 ? 8 : pokemon.height;
@@ -34,8 +43,10 @@ export default function User({
           <View style={styles.containerInfo}>
             <View style={styles.userInfo}>
               <View style={styles.names}>
-                <Text style={styles.username}>Nicolas</Text>
-                <Text style={styles.pokemonFav}>& Emboar</Text>
+                <Text style={styles.username}>{user?.username}</Text>
+                <Text style={styles.pokemonFav}>
+                  {user?.pokemonFav ? `& ${pokemon.name}` : ''}
+                </Text>
               </View>
               {/* @ts-ignore */}
               {pokemon.sprites?.other?.home?.front_default ? (
@@ -59,7 +70,10 @@ export default function User({
               ) : (
                 ''
               )}
-              <Image source={TrainerM} style={styles.ImagePersonagem} />
+              <Image
+                source={user?.personagemImage === 'M' ? TrainerM : TrainerF}
+                style={styles.ImagePersonagem}
+              />
             </View>
             <View style={styles.linhaPoke}>
               <View style={styles.linha} />
@@ -67,9 +81,12 @@ export default function User({
               <View style={styles.linha} />
             </View>
             <View style={styles.pokeInfo}>
-              <PokemonCard onTouch={onTouch} />
-              <PokemonCard onTouch={onTouch} />
-              <PokemonCard onTouch={onTouch} />
+              {user?.pokemons.map((pokeId, index) => {
+                const key = `${pokeId}-${index}`;
+                return (
+                  <PokemonCard key={key} onTouch={onTouch} idPokemon={pokeId} />
+                );
+              })}
             </View>
           </View>
         </ScrollView>

@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
   },
   pokeInfo: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 140,
+    gap: 20,
+    marginTop: 20,
     justifyContent: 'space-evenly',
   },
   icon: {

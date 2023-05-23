@@ -52,6 +52,17 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: 'gray',
   },
+  types: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  type: {
+    paddingHorizontal: 8,
+    borderRadius: 100,
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+  },
   info: {
     alignItems: 'center',
     marginVertical: 16,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Image, Text} from 'react-native';
 import ButtonBack from '../ButtonBack';
 import styles from './styles';
@@ -6,8 +6,17 @@ import API from '../../utils/Api';
 import colors from '../../utils/Colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import firestore from '@react-native-firebase/firestore';
+import {userContext} from '../../providers/userProvider';
 
-export default function InfoPokemon({onBack}: {onBack: () => void}) {
+export default function InfoPokemon({
+  onBack,
+  idPokemon,
+}: {
+  onBack: () => void;
+  idPokemon: number;
+}) {
+  const {user, updatePokemon} = useContext(userContext);
   const [pokemon, setPokemon] = useState<{
     name: string;
     types?: {type: {name: string}}[];
@@ -17,13 +26,14 @@ export default function InfoPokemon({onBack}: {onBack: () => void}) {
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const response = await API({id: 155});
+      const response = await API({id: idPokemon});
       setPokemon(response);
     };
     fetchPokemon();
-  }, []);
+  }, [idPokemon]);
 
-  let pokeColor = '';
+  let pokeColor = 'white';
+  let pokeColorType2 = 'white';
   let pokeTypes = [''];
   if (pokemon.types) {
     const typePokemon = pokemon.types.map(type => type.type.name);
@@ -32,7 +42,12 @@ export default function InfoPokemon({onBack}: {onBack: () => void}) {
       (colorType: {name: string; color: string}) =>
         colorType.name === typePokemon[0],
     );
+    const color2 = colors.find(
+      (colorType: {name: string; color: string}) =>
+        colorType.name === typePokemon[1],
+    );
     pokeColor = color ? color.color : '';
+    pokeColorType2 = color2 ? color2.color : '';
   }
 
   const pokemonWeight = `${pokemon.weight / 10}`.replace('.', ',');
@@ -42,6 +57,18 @@ export default function InfoPokemon({onBack}: {onBack: () => void}) {
     pokemonHeight = `${pokemon.height / 10}`.replace('.', ',');
   } else {
     pokemonHeight = `0,${pokemon.height}`;
+  }
+
+  async function handleClickPokemonFav() {
+    try {
+      firestore()
+        .collection('users')
+        .doc(user?.email)
+        .update({pokemonFav: idPokemon});
+      updatePokemon();
+    } catch {
+      console.log('Erro');
+    }
   }
 
   return (
@@ -69,11 +96,19 @@ export default function InfoPokemon({onBack}: {onBack: () => void}) {
               </View>
               <View style={styles.linhaVertical} />
               <View style={styles.info}>
-                <Text>
-                  {pokeTypes[1]
-                    ? `${pokeTypes[0]}, ${pokeTypes[1]}`
-                    : pokeTypes[0]}
-                </Text>
+                <View style={styles.types}>
+                  <Text style={[styles.type, {backgroundColor: pokeColor}]}>
+                    {pokeTypes[0]}
+                  </Text>
+                  {pokeTypes[1] ? (
+                    <Text
+                      style={[styles.type, {backgroundColor: pokeColorType2}]}>
+                      {pokeTypes[1]}
+                    </Text>
+                  ) : (
+                    ''
+                  )}
+                </View>
                 <Text>{pokeTypes[1] ? 'Types' : 'Type'}</Text>
               </View>
               <View style={styles.linhaVertical} />
@@ -83,7 +118,9 @@ export default function InfoPokemon({onBack}: {onBack: () => void}) {
               </View>
             </View>
             <View style={styles.linha} />
-            <TouchableOpacity activeOpacity={0.9}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={handleClickPokemonFav}>
               <LinearGradient
                 colors={['rgb(119, 252, 104)', '#6afdc2']}
                 start={{x: 0, y: 0}}

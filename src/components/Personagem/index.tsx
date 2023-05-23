@@ -1,16 +1,50 @@
 import React, {useState} from 'react';
-import {Image, View, TextInput, Text, TouchableOpacity} from 'react-native';
+import {
+  Image,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import TrainerM from '../../../assets/Trainer_M.png';
 import TrainerF from '../../../assets/Trainer_F.png';
 import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 import {Grayscale} from 'react-native-color-matrix-image-filters';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+// import RNFS from 'react-native-fs';
 
 export default function Personagens({onPress}: {onPress: () => void}) {
   const [personagem, setPersonagem] = useState(false);
+  const [username, setUsername] = useState('');
+
+  let personagemType = 'M';
+  if (personagem === true) {
+    personagemType = 'F';
+  }
 
   function handleClick() {
     setPersonagem(prev => !prev);
+  }
+
+  function handleChange(text: string) {
+    setUsername(text);
+  }
+
+  async function handleSubmit() {
+    try {
+      const email = auth().currentUser?.email;
+      await firestore()
+        .collection('users')
+        .doc(`${email}`)
+        .update({username, personagemImage: personagemType});
+      onPress();
+    } catch (err) {
+      console.log(err);
+      Alert.alert('Erro');
+    }
   }
 
   return (
@@ -42,11 +76,13 @@ export default function Personagens({onPress}: {onPress: () => void}) {
           placeholder="Digite um username"
           style={styles.input}
           placeholderTextColor={'white'}
+          value={username}
+          onChangeText={handleChange}
         />
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.9}
-          onPress={onPress}>
+          onPress={handleSubmit}>
           <LinearGradient
             colors={['rgb(119, 252, 104)', '#6afdc2']}
             start={{x: 0, y: 0}}
