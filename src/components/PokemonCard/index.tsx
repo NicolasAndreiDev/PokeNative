@@ -10,7 +10,16 @@ export default function PokemonCard({
   onTouch: (value: number) => void;
   idPokemon: number;
 }) {
-  const [pokemon, setPokemon] = useState<{name: string}>({name: ''});
+  const [pokemon, setPokemon] = useState<{
+    name: string;
+    sprites?: {
+      other?: {
+        home?: {
+          front_default?: string;
+        };
+      };
+    };
+  }>({name: ''});
 
   useEffect(() => {
     const res = async () => {
@@ -25,10 +34,8 @@ export default function PokemonCard({
       onTouchEnd={() => {
         onTouch(idPokemon);
       }}>
-      {/* @ts-ignore */}
       {pokemon.sprites?.other?.home?.front_default ? (
         <Image
-          //@ts-ignore
           source={{uri: `${pokemon.sprites.other.home.front_default}`}}
           style={styles.pokemonImage}
         />

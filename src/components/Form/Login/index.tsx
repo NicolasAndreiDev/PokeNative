@@ -1,8 +1,8 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import FormPadrao from '../FormPadrao';
 import auth from '@react-native-firebase/auth';
 import {Alert} from 'react-native';
+import {userContext} from '../../../providers/userProvider';
 
 type LoginProps = {
   onPress: () => void;
@@ -10,6 +10,7 @@ type LoginProps = {
 };
 
 export default function LoginForm({onPress, onBack}: LoginProps) {
+  const {updatePokemon} = useContext(userContext);
   const [valuesList, setValuesList] = useState<{
     email: string;
     password: string;
@@ -32,10 +33,9 @@ export default function LoginForm({onPress, onBack}: LoginProps) {
         return Alert.alert('Preencha todos os campos');
       }
 
-      await auth().signInWithEmailAndPassword(
-        valuesList.email,
-        valuesList.password,
-      );
+      await auth()
+        .signInWithEmailAndPassword(valuesList.email, valuesList.password)
+        .then(() => updatePokemon());
       onPress();
     } catch (err) {
       Alert.alert('Erro');

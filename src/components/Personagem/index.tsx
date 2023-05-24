@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Image,
   View,
@@ -14,9 +14,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Grayscale} from 'react-native-color-matrix-image-filters';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-// import RNFS from 'react-native-fs';
+import {userContext} from '../../providers/userProvider';
 
 export default function Personagens({onPress}: {onPress: () => void}) {
+  const {updatePokemon} = useContext(userContext);
   const [personagem, setPersonagem] = useState(false);
   const [username, setUsername] = useState('');
 
@@ -39,7 +40,8 @@ export default function Personagens({onPress}: {onPress: () => void}) {
       await firestore()
         .collection('users')
         .doc(`${email}`)
-        .update({username, personagemImage: personagemType});
+        .update({username, personagemImage: personagemType})
+        .then(() => updatePokemon());
       onPress();
     } catch (err) {
       console.log(err);

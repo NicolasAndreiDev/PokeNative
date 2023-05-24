@@ -1,9 +1,10 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import FormPadrao from '../FormPadrao';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Alert} from 'react-native';
+import {userContext} from '../../../providers/userProvider';
 
 type CadastroProps = {
   onPress: () => void;
@@ -11,6 +12,7 @@ type CadastroProps = {
 };
 
 export default function CadastroForm({onPress, onBack}: CadastroProps) {
+  const {updatePokemon} = useContext(userContext);
   const [valuesList, setValuesList] = useState<{
     email: string;
     password: string;
@@ -39,7 +41,6 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
         .collection('users')
         .doc(valuesList.email)
         .get();
-
       if (userDoc.exists) {
         return Alert.alert('Usuário já existe!');
       }
@@ -50,9 +51,13 @@ export default function CadastroForm({onPress, onBack}: CadastroProps) {
       );
 
       if (cadastro) {
-        await firestore().collection('users').doc(valuesList.email).set({
-          email: valuesList.email,
-        });
+        await firestore()
+          .collection('users')
+          .doc(valuesList.email)
+          .set({
+            email: valuesList.email,
+          })
+          .then(() => updatePokemon());
         onPress();
       }
     } catch (err) {

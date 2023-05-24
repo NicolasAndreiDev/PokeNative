@@ -36,12 +36,14 @@ export default function User({
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const pokemonData = await API({id: user!.pokemonFav});
-      setPokemon(pokemonData);
+      if (user?.pokemonFav) {
+        const pokemonData = await API({id: user?.pokemonFav});
+        setPokemon(pokemonData);
+      }
     };
 
     fetchPokemon();
-  }, [user, user?.pokemonFav]);
+  }, [user]);
 
   const pokemonHeigth = pokemon?.height < 8 ? 8 : pokemon.height;
 
