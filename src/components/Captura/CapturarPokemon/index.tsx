@@ -36,7 +36,7 @@ export default function CapturarPokemon({
       } else {
         userDocRef.update({pokemons: [idPokemon]});
       }
-      Alert.alert('Pokemon capturado com sucesso!');
+      Alert.alert('Pokémon capturado com sucesso!');
       mostrarPokemon(idPokemon).then(() => {
         pokemonFugiu();
         updatePokemon();
@@ -44,9 +44,9 @@ export default function CapturarPokemon({
     } else {
       if (tentativas > 1) {
         setTentativas(value => value - 1);
-        Alert.alert('Você não conseguiu capturar o pokemon, tente novamente!');
+        Alert.alert('Você não conseguiu capturar o pokémon, tente novamente!');
       } else {
-        Alert.alert('O pokemon fugiu!');
+        Alert.alert('O pokémon fugiu!');
         pokemonFugiu();
       }
     }

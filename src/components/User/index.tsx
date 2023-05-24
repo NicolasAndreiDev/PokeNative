@@ -86,7 +86,7 @@ export default function User({
             </View>
             <View style={styles.linhaPoke}>
               <View style={styles.linha} />
-              <Text>Pokemons</Text>
+              <Text>Pokémon</Text>
               <View style={styles.linha} />
             </View>
             <View style={styles.pokeInfo}>
