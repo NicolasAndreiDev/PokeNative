@@ -7,7 +7,13 @@ import RefreshPokemon from './RefreshPokemon';
 import ProfileButton from './ProfileButton';
 import CapturarPokemon from './CapturarPokemon';
 
-export default function Captura({onPress}: {onPress: () => void}) {
+export default function Captura({
+  onPress,
+  mostrarPokemon,
+}: {
+  onPress: () => void;
+  mostrarPokemon: (value: number) => Promise<void>;
+}) {
   const [click, setClick] = useState(false);
   const [id, setId] = useState<number>();
 
@@ -18,7 +24,11 @@ export default function Captura({onPress}: {onPress: () => void}) {
   return (
     <ImageBackground source={TelaCaptura} style={styles.container}>
       <Pokemon refreshPoke={click} setIdPokemon={setId} />
-      <CapturarPokemon idPokemon={id!} pokemonFugiu={handleClick} />
+      <CapturarPokemon
+        idPokemon={id!}
+        pokemonFugiu={handleClick}
+        mostrarPokemon={mostrarPokemon}
+      />
       <ProfileButton onPress={onPress} />
       <RefreshPokemon refreshPoke={handleClick} />
     </ImageBackground>

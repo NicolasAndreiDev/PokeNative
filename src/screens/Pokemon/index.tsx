@@ -1,20 +1,15 @@
 import React from 'react';
 import InfoPokemon from '../../components/InfoPokemon';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-
-type RootStackParamList = {
-  Pokemon: {id: number};
-  Profile: undefined;
-};
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 
 type PokemonPageProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Pokemon'>;
-  route: RouteProp<RootStackParamList, 'Pokemon'>;
+  navigation: StackNavigationProp<ParamListBase, 'Pokemon'>;
+  route: RouteProp<ParamListBase, 'Pokemon'>;
 };
 
 export default function Pokemon({navigation, route}: PokemonPageProps) {
-  const {id} = route.params;
+  const {id} = route.params as {id: number};
 
   function handleClickBack() {
     navigation.navigate('Profile');

@@ -12,7 +12,16 @@ export default function Pokemon({
   refreshPoke: boolean;
   setIdPokemon: (value: number) => void;
 }) {
-  const [pokemon, setPokemon] = useState<{height: number}>({
+  const [pokemon, setPokemon] = useState<{
+    height: number;
+    sprites?: {
+      other?: {
+        home?: {
+          front_default?: string;
+        };
+      };
+    };
+  }>({
     height: 0,
   });
 
@@ -29,10 +38,8 @@ export default function Pokemon({
 
   return (
     <View style={styles.infoUser}>
-      {/* @ts-ignore */}
       {pokemon.sprites?.other?.home?.front_default ? (
         <Image
-          // @ts-ignore
           source={{uri: `${pokemon.sprites.other.home.front_default}`}}
           style={[
             {

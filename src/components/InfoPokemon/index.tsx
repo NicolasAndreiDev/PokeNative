@@ -66,6 +66,7 @@ export default function InfoPokemon({
         .doc(user?.email)
         .update({pokemonFav: idPokemon});
       updatePokemon();
+      updatePokemon();
     } catch {
       console.log('Erro');
     }

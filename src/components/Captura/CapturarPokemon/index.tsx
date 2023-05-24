@@ -10,9 +10,11 @@ import {useContext} from 'react';
 export default function CapturarPokemon({
   idPokemon,
   pokemonFugiu,
+  mostrarPokemon,
 }: {
   idPokemon: number;
   pokemonFugiu: () => void;
+  mostrarPokemon: (value: number) => Promise<void>;
 }) {
   const {user, updatePokemon} = useContext(userContext);
   const [tentativas, setTentativas] = useState(3);
@@ -35,13 +37,16 @@ export default function CapturarPokemon({
         userDocRef.update({pokemons: [idPokemon]});
       }
       Alert.alert('Pokemon capturado com sucesso!');
-      updatePokemon();
-      pokemonFugiu();
+      mostrarPokemon(idPokemon).then(() => {
+        pokemonFugiu();
+        updatePokemon();
+      });
     } else {
       if (tentativas > 1) {
         setTentativas(value => value - 1);
-        Alert.alert('Você não conseguiu capturar o pokemon tente novamente');
+        Alert.alert('Você não conseguiu capturar o pokemon, tente novamente!');
       } else {
+        Alert.alert('O pokemon fugiu!');
         pokemonFugiu();
       }
     }

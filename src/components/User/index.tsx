@@ -18,22 +18,31 @@ export default function User({
   onBack: () => void;
   onTouch: (value: number) => void;
 }) {
-  const [pokemon, setPokemon] = useState<{height: number; name: string}>({
+  const [pokemon, setPokemon] = useState<{
+    height: number;
+    name: string;
+    sprites?: {
+      other?: {
+        home?: {
+          front_default?: string;
+        };
+      };
+    };
+  }>({
     height: 0,
     name: '',
   });
   const {user} = useContext(userContext);
 
   useEffect(() => {
-    if (user?.pokemonFav) {
-      const res = async () => {
-        setPokemon(await API({id: user?.pokemonFav}));
-      };
-      res();
-    }
-  }, [user]);
+    const fetchPokemon = async () => {
+      const pokemonData = await API({id: user!.pokemonFav});
+      setPokemon(pokemonData);
+    };
 
-  //@ts-ignore
+    fetchPokemon();
+  }, [user, user?.pokemonFav]);
+
   const pokemonHeigth = pokemon?.height < 8 ? 8 : pokemon.height;
 
   return (
@@ -48,10 +57,8 @@ export default function User({
                   {user?.pokemonFav ? `& ${pokemon.name}` : ''}
                 </Text>
               </View>
-              {/* @ts-ignore */}
               {pokemon.sprites?.other?.home?.front_default ? (
                 <Image
-                  // @ts-ignore
                   source={{uri: `${pokemon.sprites.other.home.front_default}`}}
                   style={[
                     styles.pokemonImage,
@@ -81,12 +88,18 @@ export default function User({
               <View style={styles.linha} />
             </View>
             <View style={styles.pokeInfo}>
-              {user?.pokemons.map((pokeId, index) => {
-                const key = `${pokeId}-${index}`;
-                return (
-                  <PokemonCard key={key} onTouch={onTouch} idPokemon={pokeId} />
-                );
-              })}
+              {user?.pokemons
+                ? user.pokemons.map((pokeId, index) => {
+                    const key = `${pokeId}-${index}`;
+                    return (
+                      <PokemonCard
+                        key={key}
+                        onTouch={onTouch}
+                        idPokemon={pokeId}
+                      />
+                    );
+                  })
+                : ''}
             </View>
           </View>
         </ScrollView>
