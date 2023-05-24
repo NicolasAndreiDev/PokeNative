@@ -22,6 +22,13 @@ export default function InfoPokemon({
     types?: {type: {name: string}}[];
     height: number;
     weight: number;
+    sprites?: {
+      other?: {
+        home?: {
+          front_default?: string;
+        };
+      };
+    };
   }>({name: '', height: 0, weight: 0});
 
   useEffect(() => {
@@ -61,12 +68,11 @@ export default function InfoPokemon({
 
   async function handleClickPokemonFav() {
     try {
-      firestore()
+      await firestore()
         .collection('users')
         .doc(user?.email)
-        .update({pokemonFav: idPokemon});
-      updatePokemon();
-      updatePokemon();
+        .update({pokemonFav: idPokemon})
+        .then(() => updatePokemon());
     } catch {
       console.log('Erro');
     }
@@ -78,10 +84,8 @@ export default function InfoPokemon({
         <View style={[styles.container, {backgroundColor: pokeColor}]}>
           <View style={styles.infoPoke}>
             <View style={styles.pokemonImage}>
-              {/* @ts-ignore */}
               {pokemon.sprites?.other?.home?.front_default && (
                 <Image
-                  //@ts-ignore
                   source={{uri: pokemon.sprites.other.home.front_default}}
                   style={styles.pokemon}
                 />
